@@ -16,14 +16,14 @@ The CLI offers the following commands:
 - **list-categories** - List all available product categories
 - **delete-code** - Delete a coupon code
 - **recheck-code** - Recheck a coupon code across ALL validators in the network
-- **my-rank** - Show current 7-day score, rank, and reward boost
+- **rank** - Displays the miner's leaderboard position, total points, and a summary of submitted coupons.
  
 
 ## Installation
 
 ### From GitHub (recommended)
 ```bash
-pip install git+https://github.com/ye-du-dev/BitKoop-Miner-CLI.git@x.y.z
+pip install git+https://github.com/BitKoopLabs/BitKoop-CLI.git@x.y.z
 ```
 
 ## Usage
@@ -168,11 +168,11 @@ bitkoop recheck-code <site> <code> [options]
 bitkoop recheck-code amazon.com WELCOME10 --wallet.name my_wallet
 ```
 
-### My Rank
-Show current 7-day score, rank, and reward boost.
+### Rank
+Displays the miner's leaderboard position, total points, and a summary of submitted coupons.
 
 ```bash
-bitkoop my-rank
+bitkoop rank
 ```
 
 ## Configuration
