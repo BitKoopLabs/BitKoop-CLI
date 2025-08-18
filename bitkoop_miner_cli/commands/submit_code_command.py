@@ -85,7 +85,6 @@ def submit_code_command(args: Namespace):
     """Submit a new coupon code using wallet signature authentication"""
     site = args.site
     code = args.code
-    discount = args.discount
     expires_at = args.expires_at
     category = args.category
     restrictions = getattr(args, "restrictions", None)
@@ -102,7 +101,6 @@ def submit_code_command(args: Namespace):
     rows = [
         ["Site", site],
         ["Code", code],
-        ["Discount", discount or "N/A"],
         ["Expires At", expires_at or "N/A"],
         ["Category", category or "N/A"],
         ["Restrictions", truncate_text(restrictions)],
@@ -134,7 +132,6 @@ def submit_code_command(args: Namespace):
             wallet_manager=wallet_manager,
             site=site,
             code=code,
-            discount=discount,
             expires_at=expires_at,
             category=category,
             restrictions=restrictions,

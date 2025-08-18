@@ -29,6 +29,10 @@ def format_coupon_row(coupon: CouponInfo, show_coupon_status: bool = False) -> t
         color = get_store_status_color_for_coupon(coupon)
         formatted[1] = f"[{color}]{formatted[1]}[/{color}]"
 
+    discount_index = 5 if not show_coupon_status else 5
+    if len(formatted) > discount_index:
+        formatted.pop(discount_index)
+
     return tuple(formatted)
 
 
@@ -45,7 +49,6 @@ def get_display_columns(is_user: bool) -> list[tuple[str, Optional[str]]]:
     columns.extend(
         [
             ("Expire at", "magenta"),
-            ("Discount", "yellow"),
             ("Category", "dim"),
             ("Submitted at", "dim"),
             ("Last Checked", "dim"),

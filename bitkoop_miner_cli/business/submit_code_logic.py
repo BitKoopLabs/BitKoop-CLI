@@ -49,8 +49,6 @@ class CouponPayload:
     category_id: Optional[int] = None
     restrictions: Optional[str] = None
     country_code: Optional[str] = None
-    discount_value: Optional[str] = None
-    discount_percentage: Optional[int] = None
     is_global: bool = True
     valid_until: Optional[str] = None
     used_on_product_url: Optional[str] = None
@@ -85,22 +83,6 @@ class CouponSubmitter:
     """Class for managing coupon submission operations"""
 
     @staticmethod
-    def parse_discount(discount: str) -> tuple[str, Optional[int]]:
-        """Parse discount string and extract percentage if applicable"""
-        discount_value = discount
-        discount_percentage = None
-
-        if discount.endswith("%"):
-            try:
-                percentage = int(discount.rstrip("%"))
-                discount_percentage = percentage
-                logger.debug(f"Set discount percentage: {percentage}")
-            except ValueError:
-                logger.debug(f"Discount value with % sign: {discount}")
-
-        return discount_value, discount_percentage
-
-    @staticmethod
     def append_category_to_restrictions(
         restrictions: Optional[str],
         category_id: Optional[int],
@@ -132,7 +114,6 @@ class CouponSubmitter:
         code: str,
         category_id: Optional[int],
         original_category: Optional[str],
-        discount: Optional[str] = None,
         expires_at: Optional[str] = None,
         restrictions: Optional[str] = None,
         country_code: Optional[str] = None,
@@ -148,7 +129,6 @@ class CouponSubmitter:
             code: The coupon code
             category_id: Category ID to use
             original_category: Original category value from user (for restrictions)
-            discount: Optional discount percentage or amount
             expires_at: Optional expiration date - passed as-is to backend
             restrictions: Optional restrictions or terms
             country_code: Optional country code
@@ -173,14 +153,6 @@ class CouponSubmitter:
             used_on_product_url=product_url,
         )
 
-        if discount:
-            discount_value, discount_percentage = CouponSubmitter.parse_discount(
-                discount
-            )
-            payload.discount_value = discount_value
-            if discount_percentage is not None:
-                payload.discount_percentage = discount_percentage
-
         if expires_at:
             payload.valid_until = expires_at
             logger.debug(f"Set expiration date: {expires_at}")
@@ -203,7 +175,6 @@ class CouponSubmitter:
         result: dict[str, Any],
         site: str,
         code: str,
-        discount: Optional[str],
         expires_at: Optional[str],
         category: Optional[str],
         restrictions: Optional[str],
@@ -214,7 +185,6 @@ class CouponSubmitter:
         """Format successful response"""
         additional_fields = {
             "coupon": result.get("first_success_data", {}),
-            "discount": discount,
             "expires_at": expires_at,
             "category": category,
             "restrictions": restrictions,
@@ -244,7 +214,6 @@ class CouponSubmitter:
         result: dict[str, Any],
         site: str,
         code: str,
-        discount: Optional[str],
         expires_at: Optional[str],
         category: Optional[str],
         restrictions: Optional[str],
@@ -255,7 +224,6 @@ class CouponSubmitter:
     ) -> dict[str, Any]:
         """Format error response"""
         additional_fields = {
-            "discount": discount,
             "expires_at": expires_at,
             "category": category,
             "restrictions": restrictions,
@@ -320,7 +288,6 @@ def execute_submission(
     code: str,
     category_id: Optional[int],
     category: Optional[str],
-    discount: Optional[str] = None,
     expires_at: Optional[str] = None,
     restrictions: Optional[str] = None,
     country_code: Optional[str] = None,
@@ -338,7 +305,6 @@ def execute_submission(
         code: The coupon code
         category_id: The validated category ID
         category: The original category (for response)
-        discount: Optional discount percentage or amount
         expires_at: Optional expiration date
         restrictions: Optional restrictions or terms
         country_code: Optional country code
@@ -359,7 +325,6 @@ def execute_submission(
             code=code,
             category_id=category_id,
             original_category=category,
-            discount=discount,
             expires_at=expires_at,
             restrictions=restrictions,
             country_code=country_code,
@@ -412,7 +377,6 @@ def execute_submission(
                 result=result,
                 site=site,
                 code=code,
-                discount=discount,
                 expires_at=expires_at,
                 category=category,
                 restrictions=restrictions,
@@ -425,7 +389,6 @@ def execute_submission(
                 result=result,
                 site=site,
                 code=code,
-                discount=discount,
                 expires_at=expires_at,
                 category=category,
                 restrictions=restrictions,
@@ -445,7 +408,6 @@ def submit_coupon_code(
     wallet_manager: WalletManager,
     site: str,
     code: str,
-    discount: Optional[str] = None,
     expires_at: Optional[str] = None,
     category: Optional[str] = None,
     restrictions: Optional[str] = None,
@@ -462,7 +424,6 @@ def submit_coupon_code(
         wallet_manager: The wallet manager for signing requests
         site: The site the coupon is for
         code: The coupon code
-        discount: Optional discount percentage or amount
         expires_at: Optional expiration date
         category: Optional category ID (integer) or description
         restrictions: Optional restrictions or terms
@@ -506,7 +467,6 @@ def submit_coupon_code(
             code=code,
             category_id=category_id,
             category=category,
-            discount=discount,
             expires_at=expires_at,
             restrictions=restrictions,
             country_code=country_code,

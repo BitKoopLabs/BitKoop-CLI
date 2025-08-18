@@ -44,7 +44,6 @@ bitkoop submit-code <site> <code> [options]
 ```
 
 **Options:**
-- `--discount` - Discount amount (e.g., '$10', '20%')
 - `--expires-at` - Expiration date (YYYY-MM-DD)
 - `--category` - Category ID (integer) or description
 - `--restrictions` - Restrictions or terms (max 1000 chars)
@@ -54,7 +53,7 @@ bitkoop submit-code <site> <code> [options]
 
 **Example:**
 ```bash
-bitkoop submit-code amazon.com WELCOME10 --discount "10%" --category "electronics"
+bitkoop submit-code amazon.com WELCOME10 --category "electronics"
 ```
 
 ### View Codes
@@ -72,6 +71,9 @@ bitkoop view-codes [site] [options]
 - `--limit` - Maximum number of codes to display per page (default: 100)
 - `--page` - Page number for pagination (default: 1)
 - `--offset` - Legacy: Number of codes to skip for pagination (default: 0)
+- `--wallet.name` - Wallet name for authentication
+- `--wallet.hotkey` - Wallet hotkey for authentication
+- `--wallet.path` - Wallet path for authentication
 
 **Examples:**
 ```bash
@@ -79,7 +81,7 @@ bitkoop view-codes                              # View all valid coupons
 bitkoop view-codes amazon.com                   # View coupons for a specific site
 bitkoop view-codes --category electronics       # View coupons in the 'electronics' category
 bitkoop view-codes --page 2 --limit 20          # View second page of results (20 per page)
-bitkoop view-codes --wallet.name my_wallet      # View your own submitted coupons
+bitkoop view-codes --wallet.name my_wallet --wallet.hotkey my_hotkey  # View your own submitted coupons
 ```
 
 ### List Sites
@@ -90,16 +92,13 @@ bitkoop list-sites [options]
 ```
 
 **Options:**
-- `--detailed` - Show detailed site information including name, category, and description
 - `--domain` - Filter by domain name (partial match, e.g., 'amazon' for amazon.com)
 - `--site-id` - Filter by specific site ID
-- `--miner` - Filter by miner hotkey (partial match)
 - `--page` - Page number for pagination (default: 1)
 - `--limit` - Number of sites per page (default: 100)
 - `--sort-by` - Field to sort by: store_id, store_domain, store_status, miner_hotkey (default: store_status)
 - `--sort-order` - Sort direction: asc, desc (default: desc for status, asc for others)
 - `--all` - Fetch all sites (ignore pagination)
-- `--show-miners` - Show miner hotkeys in the list
 
 **Examples:**
 ```bash
@@ -107,7 +106,6 @@ bitkoop list-sites                              # List all sites (sorted by stat
 bitkoop list-sites --limit 5                    # Show first 5 sites
 bitkoop list-sites --limit 5 --page 2           # Show sites 6-10
 bitkoop list-sites --domain amazon              # Find sites containing 'amazon'
-bitkoop list-sites --miner 5C4h...              # Find sites by miner hotkey
 bitkoop list-sites --sort-by store_domain       # Sort by domain name
 bitkoop list-sites --all                        # Fetch and display all sites
 ```

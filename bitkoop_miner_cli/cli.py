@@ -59,7 +59,6 @@ def setup_submit_code(parser):
         "code",
         help="Coupon code (letters, numbers, hyphens and dashes - no spaces or underscores)",
     )
-    parser.add_argument("--discount", help="Discount amount (e.g., '$10', '20%%')")
     parser.add_argument("--expires-at", help="Expiration date (YYYY-MM-DD)")
     parser.add_argument("--category", help="Category ID (integer) or description")
     parser.add_argument("--restrictions", help="Restrictions or terms (max 1000 chars)")
@@ -74,9 +73,9 @@ def setup_submit_code(parser):
     parser.set_defaults(is_global=None)
     parser.epilog = """
 Examples:
- bitkoop submit-code amazon.com SAVE20
- bitkoop submit-code target.com HOLIDAY-2024 --discount "20%" --expires-at 2024-12-31
- bitkoop submit-code walmart.com FREE-SHIP --global --category electronics
+bitkoop submit-code amazon.com SAVE20
+bitkoop submit-code target.com HOLIDAY-2024 --expires-at 2024-12-31
+bitkoop submit-code walmart.com FREE-SHIP --global --category electronics
 """
     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
@@ -97,11 +96,11 @@ def setup_view_codes(parser):
     parser.add_argument("--offset", type=int, default=0, help="Legacy: Skip N codes")
     parser.epilog = """
 Examples:
- bitkoop view-codes                    # View all valid coupons
- bitkoop view-codes amazon.com         # View coupons for a specific site
- bitkoop view-codes --category electronics
- bitkoop view-codes --page 2 --limit 20
- bitkoop view-codes --wallet.name my_wallet
+bitkoop view-codes                    # View all valid coupons
+bitkoop view-codes amazon.com         # View coupons for a specific site
+bitkoop view-codes --category electronics
+bitkoop view-codes --page 2 --limit 20
+bitkoop view-codes --wallet.name my_wallet
 """
     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
@@ -122,9 +121,9 @@ def setup_list_sites(parser):
     parser.add_argument("--all", action="store_true", help="Fetch all sites")
     parser.epilog = """
 Examples:
- bitkoop list-sites --limit 5
- bitkoop list-sites --domain amazon
- bitkoop list-sites --sort-by store_domain
+bitkoop list-sites --limit 5
+bitkoop list-sites --domain amazon
+bitkoop list-sites --sort-by store_domain
 """
     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
@@ -145,8 +144,8 @@ def setup_list_categories(parser):
     )
     parser.epilog = """
 Examples:
- bitkoop list-categories --name electro
- bitkoop list-categories --limit 10 --page 2
+bitkoop list-categories --name electro
+bitkoop list-categories --limit 10 --page 2
 """
     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
@@ -155,7 +154,7 @@ def setup_rank(parser):
     """Configure rank command arguments"""
     parser.epilog = """
 Examples:
- bitkoop rank --wallet.name mywallet --wallet.hotkey myhotkey   # View rank for wallet and hotkey
+bitkoop rank --wallet.name mywallet --wallet.hotkey myhotkey   # View rank for wallet and hotkey
 """
     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
