@@ -14,12 +14,10 @@ The CLI offers the following commands:
 - **view-codes** - View coupon codes (all valid codes by default, or your own codes with wallet authentication)
 - **list-sites** - List all available sites
 - **list-categories** - List all available product categories
-- **replace-code** - Replace an existing code with a new one
 - **delete-code** - Delete a coupon code
 - **recheck-code** - Recheck a coupon code across ALL validators in the network
-- **view-status** - View live status and discount % of validated codes
 - **my-rank** - Show current 7-day score, rank, and reward boost
-- **leaderboard** - Show ranks and scores of all miners
+ 
 
 ## Installation
 
@@ -138,23 +136,6 @@ bitkoop list-categories --sort-by category_name # Sort by name instead of ID
 bitkoop list-categories --name phone --limit 5  # Find phone categories, show 5 per page
 ```
 
-### Replace Code
-Replace an existing code with a new one.
-
-```bash
-bitkoop replace-code <site> <old_code> <new_code>
-```
-
-**Arguments:**
-- `site` - Site to replace code for
-- `old_code` - Old coupon code to replace
-- `new_code` - New coupon code
-
-**Example:**
-```bash
-bitkoop replace-code amazon.com OLDCODE NEWCODE
-```
-
 ### Delete Code
 Delete a coupon code (requires wallet authentication).
 
@@ -187,34 +168,11 @@ bitkoop recheck-code <site> <code> [options]
 bitkoop recheck-code amazon.com WELCOME10 --wallet.name my_wallet
 ```
 
-### View Status
-View live status and discount % of validated codes.
-
-```bash
-bitkoop view-status <site>
-```
-
-**Arguments:**
-- `site` - Site to view status for (or 'all')
-
-**Example:**
-```bash
-bitkoop view-status amazon.com
-bitkoop view-status all
-```
-
 ### My Rank
 Show current 7-day score, rank, and reward boost.
 
 ```bash
 bitkoop my-rank
-```
-
-### Leaderboard
-Show ranks and scores of all miners.
-
-```bash
-bitkoop leaderboard
 ```
 
 ## Configuration
