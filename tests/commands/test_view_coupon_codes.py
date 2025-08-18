@@ -7,11 +7,11 @@ from unittest import mock
 
 import pytest
 
-from koupons_miner_cli.commands.view import (
+from bitkoop_miner_cli.commands.view import (
     view_codes_command,
     view_codes_command_with_options,
 )
-from koupons_miner_cli.utils.wallet import WalletManager
+from bitkoop_miner_cli.utils.wallet import WalletManager
 
 
 class TestViewCommand:
@@ -73,15 +73,15 @@ class TestViewCommand:
     def common_mocks(self):
         """Setup common mocks used across multiple tests."""
         with mock.patch(
-            "koupons_miner_cli.commands.view.display_panel"
+            "bitkoop_miner_cli.commands.view.display_panel"
         ) as mock_display_panel, mock.patch(
-            "koupons_miner_cli.commands.view.display_table"
+            "bitkoop_miner_cli.commands.view.display_table"
         ) as mock_display_table, mock.patch(
-            "koupons_miner_cli.commands.view.WalletManager"
+            "bitkoop_miner_cli.commands.view.WalletManager"
         ) as mock_wallet_manager_class, mock.patch(
-            "koupons_miner_cli.commands.view.codes_business.get_coupon_codes"
+            "bitkoop_miner_cli.commands.view.codes_business.get_coupon_codes"
         ) as mock_get_coupon_codes, mock.patch(
-            "koupons_miner_cli.commands.view.format_code_data"
+            "bitkoop_miner_cli.commands.view.format_code_data"
         ) as mock_format_code_data:
             # Setup wallet manager mock
             mock_wallet = mock.Mock(spec=WalletManager)
@@ -279,15 +279,15 @@ class TestViewCommandWithOptions:
     def common_mocks(self):
         """Setup common mocks used across multiple tests."""
         with mock.patch(
-            "koupons_miner_cli.commands.view.display_panel"
+            "bitkoop_miner_cli.commands.view.display_panel"
         ) as mock_display_panel, mock.patch(
-            "koupons_miner_cli.commands.view.display_table"
+            "bitkoop_miner_cli.commands.view.display_table"
         ) as mock_display_table, mock.patch(
-            "koupons_miner_cli.commands.view.WalletManager"
+            "bitkoop_miner_cli.commands.view.WalletManager"
         ) as mock_wallet_manager_class, mock.patch(
-            "koupons_miner_cli.commands.view.codes_business.get_coupon_codes"
+            "bitkoop_miner_cli.commands.view.codes_business.get_coupon_codes"
         ) as mock_get_coupon_codes, mock.patch(
-            "koupons_miner_cli.commands.view.format_code_data"
+            "bitkoop_miner_cli.commands.view.format_code_data"
         ) as mock_format_code_data:
             # Setup wallet manager mock
             mock_wallet = mock.Mock(spec=WalletManager)

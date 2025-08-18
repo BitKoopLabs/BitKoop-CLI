@@ -24,7 +24,7 @@ MANIFEST
 
 # Virtual environments
 venv/
-koupons_env/
+bitkoop_env/
 env/
 ENV/
 .env
@@ -53,7 +53,7 @@ screenshots/
 *.jpeg
 
 # Project specific
-koupons_*.log
+bitkoop_*.log
 *_validation_*.json
 .cookie_file
 credential*.json

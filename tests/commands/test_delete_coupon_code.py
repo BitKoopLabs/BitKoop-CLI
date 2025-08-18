@@ -7,8 +7,8 @@ from unittest import mock
 
 import pytest
 
-from koupons_miner_cli.commands.delete import delete_code_command
-from koupons_miner_cli.utils.wallet import WalletManager
+from bitkoop_miner_cli.commands.delete import delete_code_command
+from bitkoop_miner_cli.utils.wallet import WalletManager
 
 
 class TestDeleteCommand:
@@ -34,21 +34,21 @@ class TestDeleteCommand:
     def common_mocks(self):
         """Setup common mocks used across multiple tests."""
         with mock.patch(
-            "koupons_miner_cli.commands.delete.display_panel"
+            "bitkoop_miner_cli.commands.delete.display_panel"
         ) as mock_display_panel, mock.patch(
-            "koupons_miner_cli.commands.delete.display_table"
+            "bitkoop_miner_cli.commands.delete.display_table"
         ) as mock_display_table, mock.patch(
-            "koupons_miner_cli.commands.delete.confirm_action"
+            "bitkoop_miner_cli.commands.delete.confirm_action"
         ) as mock_confirm_action, mock.patch(
-            "koupons_miner_cli.commands.delete.print_success"
+            "bitkoop_miner_cli.commands.delete.print_success"
         ) as mock_print_success, mock.patch(
-            "koupons_miner_cli.commands.delete.print_error"
+            "bitkoop_miner_cli.commands.delete.print_error"
         ) as mock_print_error, mock.patch(
-            "koupons_miner_cli.commands.delete.print_warning"
+            "bitkoop_miner_cli.commands.delete.print_warning"
         ) as mock_print_warning, mock.patch(
-            "koupons_miner_cli.commands.delete.WalletManager"
+            "bitkoop_miner_cli.commands.delete.WalletManager"
         ) as mock_wallet_manager_class, mock.patch(
-            "koupons_miner_cli.commands.delete.codes_business.delete_coupon_code"
+            "bitkoop_miner_cli.commands.delete.codes_business.delete_coupon_code"
         ) as mock_delete_coupon_code:
             # Setup wallet manager mock
             mock_wallet = mock.Mock(spec=WalletManager)

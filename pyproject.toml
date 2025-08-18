@@ -3,14 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "koupons-miner-cli"
+name = "bitkoop-miner-cli"
 version = "0.1.0"
-description = "Command-line interface for Koupons mining operations"
+description = "Command-line interface for BitKoop mining operations"
 readme = "README.md"
 requires-python = ">=3.9"
 license = "MIT"
 authors = [
-    { name = "Your Name", email = "your.email@example.com" }
+    { name = "ydc-p-dev", email = "ydc.dev4@gmail.com" }
 ]
 dependencies = [
     "pydantic-settings",
@@ -32,10 +32,10 @@ dev = [
 ]
 
 [project.scripts]
-bitkoop = "koupons_miner_cli.cli:main"
+bitkoop = "bitkoop_miner_cli.cli:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["koupons_miner_cli"]
+packages = ["bitkoop_miner_cli"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -83,4 +83,4 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.ruff.isort]
-known-first-party = ["koupons_miner_cli"]
+known-first-party = ["bitkoop_miner_cli"]

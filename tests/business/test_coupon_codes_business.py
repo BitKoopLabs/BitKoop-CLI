@@ -8,8 +8,8 @@ from unittest import mock
 import pytest
 import requests
 
-from koupons_miner_cli.business import codes as codes_business
-from koupons_miner_cli.utils.wallet import WalletManager
+from bitkoop_miner_cli.business import codes as codes_business
+from bitkoop_miner_cli.utils.wallet import WalletManager
 
 
 class TestHelperFunctions:
@@ -121,7 +121,7 @@ class TestAPIOperations:
         if expected_data:
             assert kwargs["json"] == expected_data
 
-    @mock.patch("koupons_miner_cli.business.codes.requests.post")
+    @mock.patch("bitkoop_miner_cli.business.codes.requests.post")
     def test_submit_coupon_code_success(self, mock_post, mock_wallet, success_response):
         """Test successful coupon code submission."""
         success_response.json.return_value = {
@@ -150,7 +150,7 @@ class TestAPIOperations:
             mock_post, "http://localhost:8000/v1/submit-code", expected_data
         )
 
-    @mock.patch("koupons_miner_cli.business.codes.requests.post")
+    @mock.patch("bitkoop_miner_cli.business.codes.requests.post")
     def test_submit_coupon_code_minimal_args(
         self, mock_post, mock_wallet, success_response
     ):
@@ -171,7 +171,7 @@ class TestAPIOperations:
         assert "expires_at" not in json_data
         assert "category" not in json_data
 
-    @mock.patch("koupons_miner_cli.business.codes.requests.get")
+    @mock.patch("bitkoop_miner_cli.business.codes.requests.get")
     def test_get_coupon_codes_success(self, mock_get, mock_wallet):
         """Test successful coupon codes retrieval."""
         mock_response = mock.Mock()
@@ -203,7 +203,7 @@ class TestAPIOperations:
         assert kwargs["params"]["site"] == "https://example.com"
         assert kwargs["headers"]["X-Hotkey"] == "test_hotkey"
 
-    @mock.patch("koupons_miner_cli.business.codes.requests.put")
+    @mock.patch("bitkoop_miner_cli.business.codes.requests.put")
     def test_replace_coupon_code_success(self, mock_put, mock_wallet):
         """Test successful coupon code replacement."""
         mock_response = mock.Mock()
@@ -232,7 +232,7 @@ class TestAPIOperations:
             mock_put, "http://localhost:8000/v1/replace-code", expected_data
         )
 
-    @mock.patch("koupons_miner_cli.business.codes.requests.delete")
+    @mock.patch("bitkoop_miner_cli.business.codes.requests.delete")
     def test_delete_coupon_code_success(self, mock_delete, mock_wallet):
         """Test successful coupon code deletion."""
         mock_response = mock.Mock()
@@ -267,7 +267,7 @@ class TestAPIOperations:
             ("delete", "delete", "delete_coupon_code", ("example.com", "TEST123")),
         ],
     )
-    @mock.patch("koupons_miner_cli.business.codes.requests")
+    @mock.patch("bitkoop_miner_cli.business.codes.requests")
     def test_api_error_handling(
         self,
         mock_requests,
@@ -298,7 +298,7 @@ class TestAPIOperations:
             ("delete", "delete", "delete_coupon_code", ("example.com", "TEST123")),
         ],
     )
-    @mock.patch("koupons_miner_cli.business.codes.requests")
+    @mock.patch("bitkoop_miner_cli.business.codes.requests")
     def test_network_error_handling(
         self,
         mock_requests,

@@ -9,7 +9,7 @@ import logging
 import os
 import sys
 
-from koupons_miner_cli.utils.chain.metagraph.metagraph_client import (
+from bitkoop_miner_cli.utils.chain.metagraph.metagraph_client import (
     create_metagraph_client,
 )
 
@@ -17,11 +17,11 @@ from koupons_miner_cli.utils.chain.metagraph.metagraph_client import (
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
-    from koupons_miner_cli.utils.api_client import (
+    from bitkoop_miner_cli.utils.api_client import (
         create_api_client,
         submit_coupon_to_network,
     )
-    from koupons_miner_cli.utils.wallet import WalletManager
+    from bitkoop_miner_cli.utils.wallet import WalletManager
 except ImportError as e:
     print(f"❌ Import error: {e}")
     print("Make sure all files exist and you're running from the correct directory")

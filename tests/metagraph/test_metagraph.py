@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from koupons_miner_cli.utils.chain.metagraph.metagraph_client import (
+from bitkoop_miner_cli.utils.chain.metagraph.metagraph_client import (
     create_metagraph_client,
 )
 

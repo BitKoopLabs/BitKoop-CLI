@@ -7,8 +7,8 @@ from unittest import mock
 
 import pytest
 
-from koupons_miner_cli.commands.replace import replace_code_command
-from koupons_miner_cli.utils.wallet import WalletManager
+from bitkoop_miner_cli.commands.replace import replace_code_command
+from bitkoop_miner_cli.utils.wallet import WalletManager
 
 
 class TestReplaceCommand:
@@ -40,17 +40,17 @@ class TestReplaceCommand:
     def common_mocks(self):
         """Setup common mocks used across multiple tests."""
         with mock.patch(
-            "koupons_miner_cli.commands.replace.display_panel"
+            "bitkoop_miner_cli.commands.replace.display_panel"
         ) as mock_display_panel, mock.patch(
-            "koupons_miner_cli.commands.replace.display_table"
+            "bitkoop_miner_cli.commands.replace.display_table"
         ) as mock_display_table, mock.patch(
-            "koupons_miner_cli.commands.replace.print_success"
+            "bitkoop_miner_cli.commands.replace.print_success"
         ) as mock_print_success, mock.patch(
-            "koupons_miner_cli.commands.replace.print_error"
+            "bitkoop_miner_cli.commands.replace.print_error"
         ) as mock_print_error, mock.patch(
-            "koupons_miner_cli.commands.replace.WalletManager"
+            "bitkoop_miner_cli.commands.replace.WalletManager"
         ) as mock_wallet_manager_class, mock.patch(
-            "koupons_miner_cli.commands.replace.codes_business.replace_coupon_code"
+            "bitkoop_miner_cli.commands.replace.codes_business.replace_coupon_code"
         ) as mock_replace_coupon_code:
             # Setup wallet manager mock
             mock_wallet = mock.Mock(spec=WalletManager)

@@ -7,8 +7,8 @@ from unittest import mock
 
 import pytest
 
-from koupons_miner_cli.commands.submit import submit_code_command
-from koupons_miner_cli.utils.wallet import WalletManager
+from bitkoop_miner_cli.commands.submit import submit_code_command
+from bitkoop_miner_cli.utils.wallet import WalletManager
 
 
 class TestSubmitCommand:
@@ -44,17 +44,17 @@ class TestSubmitCommand:
     def common_mocks(self):
         """Setup common mocks used across multiple tests."""
         with mock.patch(
-            "koupons_miner_cli.commands.submit.display_panel"
+            "bitkoop_miner_cli.commands.submit.display_panel"
         ) as mock_display_panel, mock.patch(
-            "koupons_miner_cli.commands.submit.display_table"
+            "bitkoop_miner_cli.commands.submit.display_table"
         ) as mock_display_table, mock.patch(
-            "koupons_miner_cli.commands.submit.display_progress"
+            "bitkoop_miner_cli.commands.submit.display_progress"
         ) as mock_display_progress, mock.patch(
-            "koupons_miner_cli.commands.submit.print_success"
+            "bitkoop_miner_cli.commands.submit.print_success"
         ) as mock_print_success, mock.patch(
-            "koupons_miner_cli.commands.submit.print_error"
+            "bitkoop_miner_cli.commands.submit.print_error"
         ) as mock_print_error, mock.patch(
-            "koupons_miner_cli.commands.submit.WalletManager"
+            "bitkoop_miner_cli.commands.submit.WalletManager"
         ) as mock_wallet_manager_class:
             # Setup wallet manager mock with successful verification by default
             mock_wallet = mock.Mock(spec=WalletManager)
