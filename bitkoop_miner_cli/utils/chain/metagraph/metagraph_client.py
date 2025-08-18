@@ -506,7 +506,7 @@ class MetagraphClient:
 
 
 def create_metagraph_client(
-    network_name: str = "test",
+    network_name: str = "finney",
     validator_check_timeout: int = 10,
     max_concurrent_checks: int = 10,
 ) -> MetagraphClient:

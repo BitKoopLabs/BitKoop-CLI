@@ -78,7 +78,7 @@ class SupervisorConfig:
     user_agent: str = "BitKoop-Miner-CLI/1.0"
 
 
-SUPERVISOR_BASE_URL = "http://91.99.203.36/api"
+SUPERVISOR_BASE_URL = "http://49.13.237.126/api"
 
 
 class SupervisorClient:

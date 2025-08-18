@@ -48,7 +48,7 @@ class SubmissionResult:
 class ValidatorConfig:
     max_concurrent_submissions: int = 10
     base_config: Optional[BaseAPIConfig] = None
-    metagraph_network: str = "test"
+    metagraph_network: str = "finney"
     submission_endpoint: str = "coupons"
     delete_coupon_endpoint: str = "coupons/delete"
     recheck_coupon_endpoint: str = "coupons/recheck"
