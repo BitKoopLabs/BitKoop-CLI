@@ -76,9 +76,15 @@ class SupervisorConfig:
     max_retries: int = 3
     retry_delay: float = 1.0
     user_agent: str = "BitKoop-Miner-CLI/1.0"
+    base_url: Optional[str] = None
 
 
-SUPERVISOR_BASE_URL = "http://49.13.237.126/api"
+try:
+    # Lazy import to avoid dependency cycles in some test contexts
+    from .network import get_supervisor_base_url
+except Exception:
+    def get_supervisor_base_url() -> str:  # type: ignore
+        return "http://49.13.237.126/api"
 
 
 class SupervisorClient:
@@ -92,11 +98,14 @@ class SupervisorClient:
         self.session.headers.update({"User-Agent": self.config.user_agent})
         self._sites_cache: Optional[list[SiteInfo]] = None
 
-        base_url = SUPERVISOR_BASE_URL.rstrip("/")
-        self.sites_endpoint = f"{base_url}/sites"
-        self.coupons_endpoint = f"{base_url}/coupons"
-        self.categories_endpoint = f"{base_url}/product-categories"
-        self.rank_endpoint = f"{base_url}/rank"
+        # Determine base URL from config or network mapping
+        resolved_base_url = (self.config.base_url or get_supervisor_base_url()).rstrip("/")
+        # Persist the resolved base URL in config for external access
+        self.config.base_url = resolved_base_url
+        self.sites_endpoint = f"{resolved_base_url}/sites"
+        self.coupons_endpoint = f"{resolved_base_url}/coupons"
+        self.categories_endpoint = f"{resolved_base_url}/product-categories"
+        self.rank_endpoint = f"{resolved_base_url}/rank"
 
     def __enter__(self):
         """Context manager entry"""
@@ -725,6 +734,7 @@ def create_supervisor_client(
     max_retries: int = 3,
     retry_delay: float = 1.0,
     user_agent: str = "BitKoop-Miner-CLI/1.0",
+    base_url: Optional[str] = None,
 ) -> SupervisorClient:
     """
     Create SupervisorClient with configuration
@@ -745,6 +755,7 @@ def create_supervisor_client(
         max_retries=max_retries,
         retry_delay=retry_delay,
         user_agent=user_agent,
+        base_url=base_url,
     )
 
     return SupervisorClient(config)

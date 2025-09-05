@@ -23,6 +23,7 @@ from bitkoop_miner_cli.utils.display import (
     handle_validation_error,
     print_warning,
 )
+from bitkoop_miner_cli.utils.network import init_network_from_args, set_network
 
 
 class CommandRegistry:
@@ -50,6 +51,13 @@ class CommandRegistry:
             parser.set_defaults(func=config["func"])
             if config["needs_wallet"]:
                 Wallet.add_args(parser)
+            # Accept network flag after the subcommand as well
+            parser.add_argument(
+                "--subtensor.network",
+                dest="subtensor.network",
+                choices=["finney", "test"],
+                help="Select network (finney/test)",
+            )
 
 
 def setup_submit_code(parser):
@@ -168,6 +176,13 @@ def setup_simple_code_command(parser, action: str):
 def create_parser():
     """Create and configure the argument parser"""
     parser = argparse.ArgumentParser(description="BitKoop Mining CLI")
+    # Global network argument support
+    parser.add_argument(
+        "--subtensor.network",
+        dest="subtensor.network",
+        choices=["finney", "test"],
+        help="Select network (finney/test)",
+    )
     subparsers = parser.add_subparsers(dest="command", help="Command to execute")
 
     registry = CommandRegistry()
@@ -257,6 +272,8 @@ def main():
         return
 
     try:
+        # Initialize global network selection from args before executing command
+        init_network_from_args(args)
         args.func(args)
     except Exception as e:
         sys.exit(handle_error(e))

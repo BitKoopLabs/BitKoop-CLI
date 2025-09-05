@@ -10,6 +10,7 @@ from bitkoop_miner_cli.utils.chain.metagraph.metagraph_client import (
 )
 
 from .base_api_client import BaseAPIClient, BaseAPIConfig
+from .network import get_network
 from .supervisor_api_client import create_supervisor_client
 
 logger = logging.getLogger(__name__)
@@ -76,7 +77,12 @@ class MetagraphError(ValidatorClientError):
 
 class ValidatorClient:
     def __init__(self, config: Optional[ValidatorConfig] = None):
+        # Initialize config and align metagraph network with global selection
         self.config = config or ValidatorConfig()
+        try:
+            self.config.metagraph_network = get_network()
+        except Exception:
+            pass
         self._base_client = BaseAPIClient(self.config.base_config)
 
     async def __aenter__(self):
