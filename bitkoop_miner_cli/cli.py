@@ -52,6 +52,13 @@ class CommandRegistry:
             parser.set_defaults(func=config["func"])
             if config["needs_wallet"]:
                 Wallet.add_args(parser)
+                        # Accept network flag after the subcommand as well
+            parser.add_argument(
+                "--subtensor.network",
+                dest="subtensor.network",
+                choices=["finney", "test"],
+                help="Select network (finney/test)",
+            )
 
 
 def setup_submit_code(parser):
