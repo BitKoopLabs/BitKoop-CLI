@@ -14,8 +14,9 @@ from bitkoop_miner_cli.commands import (
     sites,
     submit_code_command,
     view_codes,
-    view_product_categories,
 )
+
+# view_product_categories,  # DISABLED: Shopify integration provides this
 from bitkoop_miner_cli.utils.display import (
     handle_connection_error,
     handle_site_not_found_error,
@@ -51,13 +52,6 @@ class CommandRegistry:
             parser.set_defaults(func=config["func"])
             if config["needs_wallet"]:
                 Wallet.add_args(parser)
-            # Accept network flag after the subcommand as well
-            parser.add_argument(
-                "--subtensor.network",
-                dest="subtensor.network",
-                choices=["finney", "test"],
-                help="Select network (finney/test)",
-            )
 
 
 def setup_submit_code(parser):
@@ -67,23 +61,26 @@ def setup_submit_code(parser):
         "code",
         help="Coupon code (letters, numbers, hyphens and dashes - no spaces or underscores)",
     )
-    parser.add_argument("--expires-at", help="Expiration date (YYYY-MM-DD)")
-    parser.add_argument("--category", help="Category ID (integer) or description")
-    parser.add_argument("--restrictions", help="Restrictions or terms (max 1000 chars)")
-    parser.add_argument("--country-code", help="Country code (e.g., 'US', 'CA')")
-    parser.add_argument("--product-url", help="Product URL where coupon was used")
-    parser.add_argument(
-        "--global",
-        dest="is_global",
-        action="store_true",
-        help="Mark coupon as globally applicable",
-    )
-    parser.set_defaults(is_global=None)
+
+    # DISABLED FIELDS - Shopify integration provides these
+    # parser.add_argument("--expires-at", help="Expiration date (YYYY-MM-DD)")
+    # parser.add_argument("--category", help="Category ID (integer) or description")
+    # parser.add_argument("--restrictions", help="Restrictions or terms (max 1000 chars)")
+    # parser.add_argument("--country-code", help="Country code (e.g., 'US', 'CA')")
+    # parser.add_argument("--product-url", help="Product URL where coupon was used")
+    # parser.add_argument(
+    #     "--global",
+    #     dest="is_global",
+    #     action="store_true",
+    #     help="Mark coupon as globally applicable",
+    # )
+    # parser.set_defaults(is_global=None)
+
     parser.epilog = """
 Examples:
 bitkoop submit-code amazon.com SAVE20
-bitkoop submit-code target.com HOLIDAY-2024 --expires-at 2024-12-31
-bitkoop submit-code walmart.com FREE-SHIP --global --category electronics
+bitkoop submit-code target.com HOLIDAY-2025
+bitkoop submit-code target.com SAVE20 --wallet.name my_wallet_name --wallet.hotkey my_wallet_hotkey
 """
     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
@@ -96,7 +93,8 @@ def setup_view_codes(parser):
         default="all",
         help="Site to view codes for (or 'all' for all sites)",
     )
-    parser.add_argument("--category", help="Filter by category name (partial match)")
+    # DISABLED: Category filtering - Shopify integration handles this
+    # parser.add_argument("--category", help="Filter by category name (partial match)")
     parser.add_argument(
         "--limit", type=int, default=100, help="Codes per page (default: 100)"
     )
@@ -106,7 +104,6 @@ def setup_view_codes(parser):
 Examples:
 bitkoop view-codes                    # View all valid coupons
 bitkoop view-codes amazon.com         # View coupons for a specific site
-bitkoop view-codes --category electronics
 bitkoop view-codes --page 2 --limit 20
 bitkoop view-codes --wallet.name my_wallet
 """
@@ -136,26 +133,27 @@ bitkoop list-sites --sort-by store_domain
     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
 
-def setup_list_categories(parser):
-    """Configure list-categories command arguments"""
-    parser.add_argument("--name", help="Filter by name (partial match)")
-    parser.add_argument("--page", type=int, default=1, help="Page number")
-    parser.add_argument("--limit", type=int, default=100, help="Categories per page")
-    parser.add_argument(
-        "--sort-by",
-        choices=["category_id", "category_name"],
-        default="category_id",
-        help="Sort field",
-    )
-    parser.add_argument(
-        "--sort-order", choices=["asc", "desc"], default="asc", help="Sort direction"
-    )
-    parser.epilog = """
-Examples:
-bitkoop list-categories --name electro
-bitkoop list-categories --limit 10 --page 2
-"""
-    parser.formatter_class = argparse.RawDescriptionHelpFormatter
+# DISABLED: List categories command - Shopify integration provides this
+# def setup_list_categories(parser):
+#     """Configure list-categories command arguments"""
+#     parser.add_argument("--name", help="Filter by name (partial match)")
+#     parser.add_argument("--page", type=int, default=1, help="Page number")
+#     parser.add_argument("--limit", type=int, default=100, help="Categories per page")
+#     parser.add_argument(
+#         "--sort-by",
+#         choices=["category_id", "category_name"],
+#         default="category_id",
+#         help="Sort field",
+#     )
+#     parser.add_argument(
+#         "--sort-order", choices=["asc", "desc"], default="asc", help="Sort direction"
+#     )
+#     parser.epilog = """
+# Examples:
+# bitkoop list-categories --name electro
+# bitkoop list-categories --limit 10 --page 2
+# """
+#     parser.formatter_class = argparse.RawDescriptionHelpFormatter
 
 
 def setup_rank(parser):
@@ -201,11 +199,12 @@ def create_parser():
     registry.register(
         "list-sites", "List all available sites", sites.list_sites_command
     )
-    registry.register(
-        "list-categories",
-        "List all product categories",
-        view_product_categories.list_categories_command,
-    )
+    # DISABLED: List categories command - Shopify integration provides this
+    # registry.register(
+    #     "list-categories",
+    #     "List all product categories",
+    #     view_product_categories.list_categories_command,
+    # )
     registry.register(
         "rank",
         "List miner rankings by points",
@@ -230,7 +229,7 @@ def create_parser():
     setup_submit_code(registry.commands["submit-code"]["parser"])
     setup_view_codes(registry.commands["view-codes"]["parser"])
     setup_list_sites(registry.commands["list-sites"]["parser"])
-    setup_list_categories(registry.commands["list-categories"]["parser"])
+    # DISABLED: setup_list_categories(registry.commands["list-categories"]["parser"])
     setup_rank(registry.commands["rank"]["parser"])
     setup_simple_code_command(registry.commands["delete-code"]["parser"], "delete")
     setup_simple_code_command(registry.commands["recheck-code"]["parser"], "recheck")

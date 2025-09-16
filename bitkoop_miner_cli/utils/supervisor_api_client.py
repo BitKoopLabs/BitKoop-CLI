@@ -41,6 +41,7 @@ class CouponInfo:
     date_updated: Optional[str] = None
     category_name: Optional[str] = None
     last_checked_at: Optional[str] = None
+    rule: Optional[dict] = None
 
 
 @dataclass
@@ -519,6 +520,7 @@ class SupervisorClient:
                     date_updated=coupon_data.get("date_updated"),
                     category_name=coupon_data.get("product_category_name"),
                     last_checked_at=coupon_data.get("last_checked_at"),
+                    rule=coupon_data.get("rule"),
                 )
                 coupons.append(coupon)
             except Exception as e:

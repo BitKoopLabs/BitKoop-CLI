@@ -4,7 +4,7 @@ import sys
 from typing import Optional
 
 from bitkoop_miner_cli.business import view_codes_logic
-from bitkoop_miner_cli.constants import DEFAULT_PAGE_LIMIT, NAV_HINT_EMOJI
+from bitkoop_miner_cli.constants import DEFAULT_PAGE_LIMIT, NAV_HINT_EMOJI, CouponStatus
 from bitkoop_miner_cli.utils.display import display_panel, display_table
 from bitkoop_miner_cli.utils.formatting import (
     format_coupon_data,
@@ -20,7 +20,9 @@ def clean_status_text(status_text: str) -> str:
 
 
 def format_coupon_row(coupon: CouponInfo, show_coupon_status: bool = False) -> tuple:
-    formatted = list(format_coupon_data(coupon, show_coupon_status))
+    formatted = list(
+        format_coupon_data(coupon, include_coupon_status=show_coupon_status)
+    )
 
     if show_coupon_status and len(formatted) > 3:
         formatted[3] = clean_status_text(formatted[3])
@@ -29,9 +31,17 @@ def format_coupon_row(coupon: CouponInfo, show_coupon_status: bool = False) -> t
         color = get_store_status_color_for_coupon(coupon)
         formatted[1] = f"[{color}]{formatted[1]}[/{color}]"
 
-    discount_index = 5 if not show_coupon_status else 5
-    if len(formatted) > discount_index:
-        formatted.pop(discount_index)
+    if len(formatted) > 2:
+        try:
+            coupon_status = CouponStatus(coupon.status)
+            if coupon_status == CouponStatus.VALID:
+                formatted[2] = f"[green]{formatted[2]}[/green]"
+            elif coupon_status == CouponStatus.INVALID:
+                formatted[2] = f"[red]{formatted[2]}[/red]"
+            else:
+                formatted[2] = f"[yellow]{formatted[2]}[/yellow]"
+        except ValueError:
+            pass
 
     return tuple(formatted)
 
@@ -48,10 +58,10 @@ def get_display_columns(is_user: bool) -> list[tuple[str, Optional[str]]]:
 
     columns.extend(
         [
-            ("Expire at", "magenta"),
-            ("Category", "dim"),
-            ("Submitted at", "dim"),
+            ("Submitted At", "dim"),
             ("Last Checked", "dim"),
+            ("Coupon Details", None),
+            ("Expires At", "magenta"),
         ]
     )
 

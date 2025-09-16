@@ -85,8 +85,8 @@ def submit_code_command(args: Namespace):
     """Submit a new coupon code using wallet signature authentication"""
     site = args.site
     code = args.code
-    expires_at = args.expires_at
-    category = args.category
+    expires_at = getattr(args, "expires_at", None)
+    category = getattr(args, "category", None)
     restrictions = getattr(args, "restrictions", None)
     country_code = getattr(args, "country_code", None)
     product_url = getattr(args, "product_url", None)
@@ -101,14 +101,20 @@ def submit_code_command(args: Namespace):
     rows = [
         ["Site", site],
         ["Code", code],
-        ["Expires At", expires_at or "N/A"],
-        ["Category", category or "N/A"],
-        ["Restrictions", truncate_text(restrictions)],
-        ["Country Code", country_code or "N/A"],
-        ["Product URL", truncate_text(product_url)],
-        ["Global Coupon", format_global_status(is_global)],
     ]
 
+    if expires_at:
+        rows.append(["Expires At", expires_at])
+    if category:
+        rows.append(["Category", category])
+    if restrictions:
+        rows.append(["Restrictions", truncate_text(restrictions)])
+    if country_code:
+        rows.append(["Country Code", country_code])
+    if product_url:
+        rows.append(["Product URL", truncate_text(product_url)])
+    if is_global is not None:
+        rows.append(["Global Coupon", format_global_status(is_global)])
     if max_validators:
         rows.append(["Max Validators", str(max_validators)])
 
